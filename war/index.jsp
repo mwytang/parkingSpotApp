@@ -57,6 +57,7 @@
         <!-- <p>Hello, ${fn:escapeXml(user.nickname)}! (You can
             <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)
         </p> -->
+        may want to merge newbookings with index
      <%
     } else {
     %>
