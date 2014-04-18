@@ -25,6 +25,12 @@
         <script type="text/javascript" src="/javascripts/main.js"></script> 
         <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnKGB1sVx-WYMoDqgSV-qWuq0n0Wd3r8E&amp;sensor=true" style=""></script>
+        <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script>   
+    		$(function() {
+         		$( "#calendar" ).datepicker();   
+   			 }); 
+		</script>
         <title>New Booking</title>
         <script type="text/javascript">
             function initialize() {
@@ -43,7 +49,9 @@
                 map.setCenter(here.position);
             }
             google.maps.event.addDomListener(window, 'load', initialize);
-        </script>   
+        </script> 
+
+ 
     </head>
     <body>
     <%
@@ -73,6 +81,48 @@
         pageContext.setAttribute("user", user);
     %>
         <!-- put map and make appointment form here -->
+        <p>Booking date: <input type="text" id="calendar" /></p>
+        <p> Start time: 
+		<select name="hours">
+		<option value="12">12</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+		</select>
+		:
+		<select name="minutes">
+		<option value="00">00</option>
+		<option value="05">05</option>
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+		<option value="25">25</option>
+		<option value="30">30</option>
+		<option value="35">35</option>
+		<option value="40">40</option>
+		<option value="45">45</option>
+		<option value="50">50</option>
+		<option value="55">55</option>
+		</select>
+		<select name="ampm">
+		<option value="am">AM</option>
+		<option value="pm">PM</option>
+		</select>
+		<button type="submit" onclick="displaySpots()">Show Available Spots</button>
+		</p> 
+		<script>
+			function displaySpots()
+			{
+			}
+		</script>
         <div id="map-canvas"></div>
      <%
     } else {
