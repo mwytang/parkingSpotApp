@@ -50,7 +50,6 @@
             }
             google.maps.event.addDomListener(window, 'load', initialize);
         </script> 
-
  
     </head>
     <body>
@@ -155,9 +154,32 @@
 		<button type="submit" onclick="displaySpots()">Show Available Spots</button>
 		</p>
 		<script>
+			//displays spots on map
 			function displaySpots()
 			{
-			}
+				var locations = {};
+				locations['location1'] = {
+					center: new google.maps.LatLng(49.26123, -123.11393)
+				};
+				var cityCircle;
+				 // Construct the circle for each value in locations.
+  
+			  for (var location in locations) {
+			    var circleOptions = {
+			      strokeColor: '#FF0000',
+			      strokeOpacity: 0.8,
+			      strokeWeight: 2,
+			      fillColor: '#FF0000',
+			      fillOpacity: 0.35,
+			      map: map,
+			      center: locations[location].center,
+			      radius: 100000000000000
+			    };
+    			// Add the circle for this city to the map.
+    			cityCircle = new google.maps.Circle(circleOptions);
+  			}
+				
+		}
 		</script>
         <div id="map-canvas"></div>
      <%
