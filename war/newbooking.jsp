@@ -26,6 +26,7 @@
         <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnKGB1sVx-WYMoDqgSV-qWuq0n0Wd3r8E&amp;sensor=true" style=""></script>
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=drawing&sensor=true"></script>
 		<script>   
     		$(function() {
          		$( "#calendar" ).datepicker();   
@@ -47,6 +48,23 @@
                 }
                 var infowindow = new google.maps.InfoWindow(here);
                 map.setCenter(here.position);
+                
+                var drawingManager = new google.maps.drawing.DrawingManager({
+                	  drawingMode: google.maps.drawing.OverlayType.MARKER,
+                	  drawingControl: true,
+                	  drawingControlOptions: {
+                	    position: google.maps.ControlPosition.TOP_CENTER,
+                	    drawingModes: [
+                	      google.maps.drawing.OverlayType.MARKER,,
+                	      google.maps.drawing.OverlayType.RECTANGLE
+                	    ]
+                	  },
+                	  markerOptions: {
+                	    icon: 'http://www.example.com/icon.png'
+                	  }
+                	});
+                	drawingManager.setMap(map);
+                
             }
             google.maps.event.addDomListener(window, 'load', initialize);
         </script> 
@@ -65,6 +83,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="mybookings.jsp">My Bookings</a></li>
                         <li><a href="newbooking.jsp">New Booking</a></li>
+                        <li><a href="hostbooking.jsp">Host Booking</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">
