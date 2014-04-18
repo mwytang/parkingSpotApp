@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/javascripts/main.js"></script> 
+        <script type="text/javascript" src="javascripts/main.js"></script> 
         <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnKGB1sVx-WYMoDqgSV-qWuq0n0Wd3r8E&amp;sensor=true" style=""></script>
         <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
@@ -39,7 +39,7 @@
                   center: new google.maps.LatLng(49.26123, -123.11393),
                   zoom: 15
                 };
-                var map = new google.maps.Map(document.getElementById("map-canvas"),
+                map = new google.maps.Map(document.getElementById("map-canvas"),
                     mapOptions);
                 var here = {
                     map: map,
@@ -65,6 +65,7 @@
                 	});
                 	drawingManager.setMap(map);
                 
+                loadMarkers();  
             }
             google.maps.event.addDomListener(window, 'load', initialize);
         </script> 
@@ -172,34 +173,6 @@
 		</select>
 		<button type="submit" onclick="displaySpots()">Show Available Spots</button>
 		</p>
-		<script>
-			//displays spots on map
-			function displaySpots()
-			{
-				var locations = {};
-				locations['location1'] = {
-					center: new google.maps.LatLng(49.26123, -123.11393)
-				};
-				var cityCircle;
-				 // Construct the circle for each value in locations.
-  
-			  for (var location in locations) {
-			    var circleOptions = {
-			      strokeColor: '#FF0000',
-			      strokeOpacity: 0.8,
-			      strokeWeight: 2,
-			      fillColor: '#FF0000',
-			      fillOpacity: 0.35,
-			      map: map,
-			      center: locations[location].center,
-			      radius: 100000000000000
-			    };
-    			// Add the circle for this city to the map.
-    			cityCircle = new google.maps.Circle(circleOptions);
-  			}
-				
-		}
-		</script>
         <div id="map-canvas"></div>
      <%
     } else {

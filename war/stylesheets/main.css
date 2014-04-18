@@ -22,3 +22,12 @@ table.login td {
 	height: 500px;
 	margin: 0 auto; 
 }
+
+.box {
+	width: 100px;
+	height: 50px;
+}
+
+#ui-datepicker-div {
+	background-color: white;
+}
