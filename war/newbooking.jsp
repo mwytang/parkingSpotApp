@@ -83,8 +83,7 @@
                 <% if (user != null) { %>
                     <ul class="nav navbar-nav">
                         <li><a href="mybookings.jsp">My Bookings</a></li>
-                        <li><a href="newbooking.jsp">New Booking</a></li>
-                        <li><a href="hostbooking.jsp">Host Booking</a></li>
+                        <li><a href="hostbooking.jsp">Make Booking</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">

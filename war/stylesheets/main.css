@@ -31,3 +31,26 @@ table.login td {
 #ui-datepicker-div {
 	background-color: white;
 }
+
+table.bookings td {
+	border-style:solid;
+	border-width: 2px;
+	border-color: black;
+	padding: 5px;
+	text-align: center;
+}
+
+table.bookings th {
+	text-align: center;
+	font-weight: bold;
+	border-style:solid;
+	border-width: 2px;
+	border-color: black;
+	padding: 5px;
+}
+
+table.bookings {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+}

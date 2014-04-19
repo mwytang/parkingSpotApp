@@ -38,7 +38,7 @@
          		$( "#calendar" ).datepicker();   
    			 }); 
 		</script>
-<title>Host Booking</title>
+<title>Make Booking</title>
 <script type="text/javascript">
             function initialize() {
                 var mapOptions = {
@@ -73,7 +73,8 @@
                     var addressText = document.getElementById("address");
                     addressText.value = latitude + "," + longitude;              
                 }
-                        
+                
+                //loadMarkers();        
             }
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
@@ -94,8 +95,7 @@
 				%>
 				<ul class="nav navbar-nav">
 					<li><a href="mybookings.jsp">My Bookings</a></li>
-					<li><a href="newbooking.jsp">New Booking</a></li>
-					<li><a href="hostbooking.jsp">Host Booking</a></li>
+					<li><a href="hostbooking.jsp">Make Booking</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a
@@ -109,6 +109,7 @@
 			<!-- /.navbar-collapse -->
 		</div>
 	</nav>
+	<center><h1>Create a Booking</h1></center>
 	<%
 		if (user != null) {
 			pageContext.setAttribute("user", user);
@@ -118,7 +119,7 @@
 		Booking date: <input type="text" id="calendar" />
 	</p>
 	<p>
-		Start time: <select name="hours">
+		Start time: <select id="startHour" name="hours">
 			<option value="12">12</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -131,7 +132,7 @@
 			<option value="9">9</option>
 			<option value="10">10</option>
 			<option value="11">11</option>
-		</select> : <select name="minutes">
+		</select> : <select id="startMinute" name="minutes">
 			<option value="00">00</option>
 			<option value="05">05</option>
 			<option value="10">10</option>
@@ -144,13 +145,13 @@
 			<option value="45">45</option>
 			<option value="50">50</option>
 			<option value="55">55</option>
-		</select> <select name="ampm">
+		</select> <select id="startampm" name="ampm">
 			<option value="am">AM</option>
 			<option value="pm">PM</option>
 		</select>
 	</p>
 	<p>
-		End time: <select name="hours">
+		End time: <select id="endHour" name="hours">
 			<option value="12">12</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -163,7 +164,7 @@
 			<option value="9">9</option>
 			<option value="10">10</option>
 			<option value="11">11</option>
-		</select> : <select name="minutes">
+		</select> : <select id="endMinute" name="minutes">
 			<option value="00">00</option>
 			<option value="05">05</option>
 			<option value="10">10</option>
@@ -176,14 +177,14 @@
 			<option value="45">45</option>
 			<option value="50">50</option>
 			<option value="55">55</option>
-		</select> <select name="ampm">
+		</select> <select id="endampm" name="ampm">
 			<option value="am">AM</option>
 			<option value="pm">PM</option>
 		</select>
-		<button type="submit" onclick="displaySpots()">Show Available
+		<button type="submit" onclick="displaySpots();getAjaxRequest();">Show Available
 			Spots</button>
 	<P>
-		Address: <INPUT TYPE="TEXT" NAME="address">
+		<!--Address: <INPUT TYPE="TEXT" NAME="address">-->
 	</p>
 	<script>
 			//displays spots on map

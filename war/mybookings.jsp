@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.lang.System" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
@@ -10,6 +12,9 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
+<%@ page import="com.google.appengine.api.datastore.Query.Filter" %>
+<%@ page import="com.google.appengine.api.datastore.Query.FilterPredicate" %>
+<%@ page import="com.google.appengine.api.datastore.Query.FilterOperator" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
@@ -38,7 +43,7 @@
                 <% if (user != null) { %>
                     <ul class="nav navbar-nav">
                         <li><a href="mybookings.jsp">My Bookings</a></li>
-                        <li><a href="newbooking.jsp">New Booking</a></li>
+					    <li><a href="hostbooking.jsp">Make Booking</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">
@@ -49,11 +54,60 @@
             </div><!-- /.navbar-collapse -->
         </div>
     </nav>
+    <center><h1>My Bookings</h1></center>
     <%
     if (user != null) {
         pageContext.setAttribute("user", user);
     %>
-        <!-- put map and make appointment form here -->
+    <%
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Key bookingKey = KeyFactory.createKey("ParkingSpotApp", user.getNickname());
+    
+    // Run an ancestor query to ensure we see the most up-to-date
+    // view of the Greetings belonging to the selected Guestbook.
+    long now = System.currentTimeMillis();
+    String n = String.valueOf(now);
+    Filter notStarted = new FilterPredicate("start", FilterOperator.GREATER_THAN_OR_EQUAL, n);
+    Query query = new Query("ParkingSpotApp", bookingKey).setFilter(notStarted).addSort("start", Query.SortDirection.ASCENDING);
+    List<Entity> bookings = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+    pageContext.setAttribute("now", now);
+    
+    if (bookings.isEmpty()) {
+        %>
+        <center><h3>Empty</h3></center>
+        <%
+    } else {
+        %>
+        <table class="bookings">
+        <tr>
+        <th>Parking Spot ID</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Cancel?</th>
+        </tr>
+        <%
+        for (Entity booking : bookings) {
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm aaa");
+            long st = Long.parseLong(booking.getProperty("start").toString(), 10);
+            long e = Long.parseLong(booking.getProperty("end").toString(), 10);
+            String start = sdf.format(st);
+            String end = sdf.format(e);
+            pageContext.setAttribute("spotId", booking.getProperty("spotId"));
+            pageContext.setAttribute("start", start);
+            pageContext.setAttribute("end", end);
+            pageContext.setAttribute("st", st);
+            pageContext.setAttribute("e", e);
+            pageContext.setAttribute("id", booking.getProperty("ID/Name"));
+        %>
+            <tr>
+            <td>${fn:escapeXml(spotId)}</td>
+            <td>${fn:escapeXml(start)}</td>
+            <td>${fn:escapeXml(end)}</td>
+            <td><button type="submit" onclick='cancelBooking("${fn:escapeXml(spotId)}", "${fn:escapeXml(st)}", "${fn:escapeXml(e)}");'>Cancel</button></td>
+            </tr>
+        <% } %>
+        </table>
+    <% } %>
      <%
     } else {
     %>

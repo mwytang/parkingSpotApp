@@ -38,8 +38,7 @@
                 <% if (user != null) { %>
                     <ul class="nav navbar-nav">
                         <li><a href="mybookings.jsp">My Bookings</a></li>
-                        <li><a href="newbooking.jsp">New Booking</a></li>
-                        <li><a href="hostbooking.jsp">Host Booking</a></li>
+                        <li><a href="hostbooking.jsp">Make Booking</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">
@@ -50,6 +49,8 @@
             </div><!-- /.navbar-collapse -->
         </div>
     </nav>
+    <center><h1>Welcome to Vancouver!</h1>
+    <h3>Go to Make Booking above to start reserving a parking spot.</h3></center>
     <%
     if (user != null) {
         pageContext.setAttribute("user", user);
@@ -58,7 +59,6 @@
         <!-- <p>Hello, ${fn:escapeXml(user.nickname)}! (You can
             <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)
         </p> -->
-        may want to merge newbookings with index
      <%
     } else {
     %>
