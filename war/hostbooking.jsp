@@ -29,55 +29,58 @@
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/javascripts/main.js"></script>
 <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/jquery-ui-1.10.4.custom.min.css" />
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnKGB1sVx-WYMoDqgSV-qWuq0n0Wd3r8E&amp;sensor=true"
 	style=""></script>
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 <script>   
     		$(function() {
-         		$( "#calendar" ).datepicker();   
+         		$( "#calendar" ).datepicker({ defaultDate: new Date()}); 
    			 }); 
 		</script>
 <title>Make Booking</title>
 <script type="text/javascript">
-            function initialize() {
-                var mapOptions = {
-                  center: new google.maps.LatLng(49.26123, -123.11393),
-                  zoom: 15
-                };
-                map = new google.maps.Map(document.getElementById("map-canvas"),
-                    mapOptions);
-                var here = {
-                    map: map,
-                    position: new google.maps.LatLng(49.26123, -123.11393),
-                    content: 'You are here'
-                }
-                var infowindow = new google.maps.InfoWindow(here);
-                map.setCenter(here.position);
-                
-                google.maps.event.addListener(map, 'click', function(event) {
-                    placeMarker(event.latLng);
-                });
-                
-                // Places marker where you click
-                function placeMarker(location) {
-                    var marker = new google.maps.Marker({
-                        position: location, 
-                        map: map,
-                        draggable:true,
-                        title:"Drag me to your parking spot",
-                       
-                    });
-                    var latitude = latLng.lat();
-                    var longitude = latLng.lng();
-                    var addressText = document.getElementById("address");
-                    addressText.value = latitude + "," + longitude;              
-                }
-                
-                //loadMarkers();        
-            }
-            google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
+    function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(49.26123, -123.11393),
+          zoom: 15
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+        var here = {
+            map: map,
+            position: new google.maps.LatLng(49.26123, -123.11393),
+            content: 'Here'
+        }
+        var infowindow = new google.maps.InfoWindow(here);
+        map.setCenter(here.position);
+        
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+        });
+        
+        // Places marker where you click
+        /*function placeMarker(location) {
+            var marker = new google.maps.Marker({
+                position: location, 
+                map: map,
+                draggable:true,
+                title:"Drag me to your parking spot",
+               
+            });
+            var latitude = latLng.lat();
+            var longitude = latLng.lng();
+            var addressText = document.getElementById("address");
+            addressText.value = latitude + "," + longitude;              
+        }*/
+        
+        //loadMarkers();        
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    var today = new Date();
+    var month = today.getMonth() + 1;
+</script>
 
 </head>
 <body>
@@ -181,7 +184,7 @@
 			<option value="am">AM</option>
 			<option value="pm">PM</option>
 		</select>
-		<button type="submit" onclick="displaySpots();getAjaxRequest();">Show Available
+		<button type="submit" onclick="getAjaxRequest();">Show Available
 			Spots</button>
 	<P>
 		<!--Address: <INPUT TYPE="TEXT" NAME="address">-->

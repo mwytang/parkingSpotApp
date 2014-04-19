@@ -160,6 +160,11 @@ function getAjaxRequest() {
 		xmlHttpReq.onreadystatechange = httpCallBackFunction_getAjaxRequest;
 
 		var date = document.getElementById("calendar").value;
+
+		if (date == "") {
+			alert('Please select a date.');
+			return false;
+		}
 		
 		var startHour = document.getElementById("startHour");
 		startHour = startHour.options[startHour.selectedIndex].text;
@@ -184,10 +189,21 @@ function getAjaxRequest() {
 		
 		var starttime = +new Date(year, month, day, startHour, startMinute);
 		var endtime = +new Date(year, month, day, endHour, endMinute);
-		console.log(new Date(year, month, day, startHour, startMinute));
+		var now = +new Date();
+		
+		if (endtime <= starttime) {
+			alert('End time has to be later than Start time.');
+			return false;
+		} else if (starttime < now) {
+			alert('Start time has already past.');
+			return false;
+		} else if (endtime < now) {
+			alert('End time has already past.');
+			return false;
+		}
 
+		displaySpots();
 		var url = "/queryprocessor?start="+starttime+"&end="+endtime;
-		console.log(starttime);
 		
 		xmlHttpReq.open('GET', url, true);
     	xmlHttpReq.send(null);
@@ -222,7 +238,6 @@ function httpCallBackFunction_getAjaxRequest() {
 			//alert(xmlHttpReq.responseText);
 			badIds = xmlHttpReq.responseText;
 			loadMarkers();
-			console.log(badIds);
 			//document.getElementById("msglist_"+selectedMarkerID).innerHTML=xmlHttpReq.responseText;					
 		}else{
 			alert("No data.");
@@ -231,7 +246,7 @@ function httpCallBackFunction_getAjaxRequest() {
 }
 
 function postAjaxRequest(spotId, start, end) {
-	alert("postAjaxRequest");
+	//alert("postAjaxRequest");
 	try {
 		xmlHttpReq = new XMLHttpRequest();
 		xmlHttpReq.onreadystatechange = httpCallBackFunction_postAjaxRequest;
@@ -277,7 +292,7 @@ function httpCallBackFunction_postAjaxRequest() {
 			//alert(xmlHttpReq.responseText);			
 			//document.getElementById("msglist_"+selectedMarkerID).innerHTML=xmlHttpReq.responseText;
 			//document.getElementById("msgbox_"+selectedMarkerID).value = "";
-			alert('Booking Made');
+			//alert('Booking Made');
 		}else{
 			alert("No data.");
 		}	
@@ -285,26 +300,26 @@ function httpCallBackFunction_postAjaxRequest() {
 }
 
 function cancelBooking(spotId, start, end) {
-	alert("postAjaxRequest");
-	try {
-		xmlHttpReq = new XMLHttpRequest();
-		xmlHttpReq.onreadystatechange = httpCallBackFunction_cancelBooking;
-		var url = "/cancel";
-	
-		xmlHttpReq.open("POST", url, true);
-		xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
+	var confirmation = confirm("Are you sure?");
+	if (confirmation) {
+		try {
+			xmlHttpReq = new XMLHttpRequest();
+			xmlHttpReq.onreadystatechange = httpCallBackFunction_cancelBooking;
+			var url = "/cancel";
 		
-		/*var postMsgValue = document.getElementById(postMsg).value;
-		var markerIDValue = markerID; 
-		var guestbookNameValue = guestbookName;*/ 
-    	
-		xmlHttpReq.send("spotId="+spotId+"&start="+start+"&end="+end);
-    	
-    	//alert();
-    	
-	} catch (e) {
-    	alert("Error: " + e);
-	}	
+			xmlHttpReq.open("POST", url, true);
+			xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
+	    	
+			xmlHttpReq.send("spotId="+spotId+"&start="+start+"&end="+end);
+	    	
+	    	//alert();
+	    	
+		} catch (e) {
+	    	alert("Error: " + e);
+		}
+	} else {
+		return false;
+	}
 }
 
 function httpCallBackFunction_cancelBooking() {
@@ -330,8 +345,7 @@ function httpCallBackFunction_cancelBooking() {
 			//alert(xmlHttpReq.responseText);			
 			//document.getElementById("msglist_"+selectedMarkerID).innerHTML=xmlHttpReq.responseText;
 			//document.getElementById("msgbox_"+selectedMarkerID).value = "";
-			console.reload();
-			alert('Booking Made');
+			window.location.replace("/mybookings.jsp");
 		}else{
 			alert("No data.");
 		}	

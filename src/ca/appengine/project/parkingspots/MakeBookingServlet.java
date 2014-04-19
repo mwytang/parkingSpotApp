@@ -49,7 +49,7 @@ public class MakeBookingServlet extends HttpServlet {
         //String htmlString = "<div>" + user + " " + markerID + " " + guestbookName + " " + postMsg + "</div>";      
         //System.out.println(htmlString);  
         //resp.setContentType("text/html");
-        //resp.getWriter().println(htmlString);
+        resp.getWriter().println("OK");
         // Test
         
         //resp.sendRedirect("/queryprocessor/?markerID="+markerID+"&guestbookName="+guestbookName);

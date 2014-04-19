@@ -49,12 +49,12 @@
             </div><!-- /.navbar-collapse -->
         </div>
     </nav>
-    <center><h1>Welcome to Vancouver!</h1>
-    <h3>Go to Make Booking above to start reserving a parking spot.</h3></center>
     <%
     if (user != null) {
         pageContext.setAttribute("user", user);
     %>
+        <center><h1>Welcome to Vancouver!</h1>
+        <h3>Go to Make Booking above to start reserving a parking spot.</h3></center>
         <!-- put map and make appointment form here -->
         <!-- <p>Hello, ${fn:escapeXml(user.nickname)}! (You can
             <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)

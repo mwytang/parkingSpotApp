@@ -1,20 +1,10 @@
-<!-- Indices written at Sat, 19 Apr 2014 01:09:23 PDT -->
+<!-- Indices written at Sat, 19 Apr 2014 16:23:02 PDT -->
 
 <datastore-indexes>
 
-    <!-- Used 14 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="ParkingSpotApp" ancestor="true" source="auto">
         <property name="start" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 9 times in query history -->
-    <datastore-index kind="ParkingSpotApp" ancestor="true" source="auto">
-        <property name="end" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 19 times in query history -->
-    <datastore-index kind="ParkingSpotApp" ancestor="true" source="auto">
-        <property name="start" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>

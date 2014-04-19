@@ -54,3 +54,89 @@ table.bookings {
 	margin-right: auto;
 	margin-top: 2em;
 }
+
+.datepicker {
+ position: absolute;
+ text-align: center;
+ border: 1px #C4D5E3 solid;
+ font-family: arial;
+ background: #FFFFFF;
+ font-size: 10px;
+ padding: 0px;
+}
+.datepicker table {
+ font-size: 10px;
+ margin: 0px;
+ padding: 0px;
+ text-align: center;
+ width: 180px;
+}
+.datepicker table thead tr th {
+ font-size: 12px;
+ font-weight: bold;
+ background: #e9eff4;
+ border-bottom:1px solid #c4d5e3;
+ padding: 0px;
+ margin: 0px;
+}
+.datepicker table tbody tr {
+ border: 1px white solid;
+ margin: 0px;
+ padding: 0px;
+}
+.datepicker table tbody tr td {
+ border: 1px #eaeaea solid;
+ margin: 0px;
+ padding: 0px;
+ text-align: center;
+}
+.datepicker table tbody tr td:hover,
+.datepicker table tbody tr td.outbound:hover,
+.datepicker table tbody tr td.today:hover {
+ border: 1px #c4d5e3 solid;
+ background: #e9eff4;
+ cursor: pointer;
+}
+.datepicker table tbody tr td.wday {
+ border: 1px #ffffff solid;
+ background: #ffffff;
+ cursor: text;
+}
+.datepicker table tbody tr td.outbound {
+ background: #e8e4e4;
+}
+.datepicker table tbody tr td.today {
+ border: 1px #16518e solid;
+ background: #c4d5e3;
+}
+.datepicker table tbody tr td.nclick,
+.datepicker table tbody tr td.nclick_outbound,
+.datepicker table tbody tr td.nclick_today {
+ cursor:default; color:#aaa;
+}
+.datepicker table tbody tr td.nclick_outbound {
+ background:#E8E4E4;
+}
+.datepicker table tbody tr td.nclick_today {
+ background:#c4d5e3;
+}
+.datepicker table tbody tr td.nclick:hover,
+.datepicker table tbody tr td.nclick_outbound:hover,
+.datepicker table tbody tr td.nclick_today:hover {
+ border: 1px #eaeaea solid;
+ background: #FFF;
+}
+.datepicker table tbody tr td.nclick_outbound:hover {
+ background:#E8E4E4;
+}
+.datepicker table tbody tr td.nclick_today:hover {
+ background:#c4d5e3;
+}
+.datepicker table tfoot tr td {
+ font-size: 10px;
+ background: #e9eff4;
+ border-top:1px solid #c4d5e3;
+ cursor: pointer;
+ text-align: center;
+ padding: 0px;
+}
