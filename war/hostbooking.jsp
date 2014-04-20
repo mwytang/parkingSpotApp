@@ -112,12 +112,12 @@
 			<!-- /.navbar-collapse -->
 		</div>
 	</nav>
-	<center><h1>Create a Booking</h1></center>
 	<%
 		if (user != null) {
 			pageContext.setAttribute("user", user);
 	%>
 	<!-- put map and make appointment form here -->
+	<center><h1>Create a Booking</h1></center>
 	<p>
 		Booking date: <input type="text" id="calendar" />
 	</p>

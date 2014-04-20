@@ -16,6 +16,7 @@
 <%@ page import="com.google.appengine.api.datastore.Query.Filter" %>
 <%@ page import="com.google.appengine.api.datastore.Query.FilterPredicate" %>
 <%@ page import="com.google.appengine.api.datastore.Query.FilterOperator" %>
+<%@ page import="com.google.appengine.api.datastore.Query.CompositeFilterOperator" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
@@ -55,21 +56,23 @@
             </div><!-- /.navbar-collapse -->
         </div>
     </nav>
-    <center><h1>My Bookings</h1></center>
     <%
     if (user != null) {
         pageContext.setAttribute("user", user);
     %>
+    <center><h1>My Bookings</h1></center>
     <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key bookingKey = KeyFactory.createKey("ParkingSpotApp", user.getNickname());
+    Key bookingKey = KeyFactory.createKey("ParkingSpotApp", "group5");
     
     // Run an ancestor query to ensure we see the most up-to-date
     // view of the Greetings belonging to the selected Guestbook.
     long now = System.currentTimeMillis();
     String n = String.valueOf(now);
+    Filter owner = new FilterPredicate("user", FilterOperator.EQUAL, user.getNickname());
     Filter notStarted = new FilterPredicate("start", FilterOperator.GREATER_THAN_OR_EQUAL, n);
-    Query query = new Query("ParkingSpotApp", bookingKey).setFilter(notStarted).addSort("start", Query.SortDirection.ASCENDING);
+    Filter filter = CompositeFilterOperator.and(owner, notStarted);
+    Query query = new Query("ParkingSpotApp", bookingKey).setFilter(filter).addSort("start", Query.SortDirection.ASCENDING);
     List<Entity> bookings = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
     pageContext.setAttribute("now", now);
     

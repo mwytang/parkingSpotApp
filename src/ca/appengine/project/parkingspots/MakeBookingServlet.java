@@ -33,11 +33,11 @@ public class MakeBookingServlet extends HttpServlet {
         String start = req.getParameter("start");
         String end = req.getParameter("end");
        
-        Key userKey = KeyFactory.createKey("ParkingSpotApp", user.getNickname());
+        Key userKey = KeyFactory.createKey("ParkingSpotApp", "group5");
         //Date date = new Date();
         Entity booking = new Entity("ParkingSpotApp", userKey);
         
-        booking.setProperty("user", user);
+        booking.setProperty("user", user.getNickname());
         booking.setProperty("spotId", spotId);
         booking.setProperty("start", start);
         booking.setProperty("end", end);

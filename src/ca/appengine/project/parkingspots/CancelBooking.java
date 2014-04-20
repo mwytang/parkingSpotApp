@@ -40,7 +40,7 @@ public class CancelBooking extends HttpServlet {
         String start = req.getParameter("start");
         String end = req.getParameter("end");
        
-        Key entityKey = KeyFactory.createKey("ParkingSpotApp", user.getNickname());
+        Key entityKey = KeyFactory.createKey("ParkingSpotApp", "group5");
         Filter spotFilter = new FilterPredicate("spotId", FilterOperator.EQUAL, spotId);
         Filter startFilter = new FilterPredicate("start", FilterOperator.EQUAL, start);
         Filter endFilter = new FilterPredicate("end", FilterOperator.EQUAL, end);

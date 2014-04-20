@@ -32,7 +32,7 @@ public class QueryProcessor extends HttpServlet {
         User user = userService.getCurrentUser();
                 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Key bookingKey = KeyFactory.createKey("ParkingSpotApp", user.getNickname());
+        Key bookingKey = KeyFactory.createKey("ParkingSpotApp", "group5");
         
         String start = req.getParameter("start");
         String end = req.getParameter("end");
