@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.lang.System" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.TimeZone" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
@@ -87,9 +88,10 @@
         </tr>
         <%
         for (Entity booking : bookings) {
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm aaa");
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
             long st = Long.parseLong(booking.getProperty("start").toString(), 10);
             long e = Long.parseLong(booking.getProperty("end").toString(), 10);
+            sdf.setTimeZone(TimeZone.getTimeZone("America/Vancouver"));
             String start = sdf.format(st);
             String end = sdf.format(e);
             pageContext.setAttribute("spotId", booking.getProperty("spotId"));
