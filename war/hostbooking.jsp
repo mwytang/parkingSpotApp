@@ -42,22 +42,44 @@
 <title>Make Booking</title>
 <script type="text/javascript">
     function initialize() {
-   
-        
-        // Get initial state of lat/long
-        var textlat = document.getElementById('textlat');
+   		
+   		// Default value the lat/long
+   		var textlat = document.getElementById('textlat');
+   		var textlong = document.getElementById('textlong');
+   		textlat.value  = "49.26";
+    	textlong.value = "-123.11";
+    	
+    	// Create a basic map on defaults		
+    	var mapOptions = {
+    		zoom: 14
+  		};
+  		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+   		
+   		// Attempt to change map according to the client's coordinates
+      	if (navigator.geolocation) {
+   			navigator.geolocation.getCurrentPosition(function(position) {
+     			textlat.value  = position.coords.latitude;
+    			textlong.value = position.coords.longitude;
+    			var initialLocation = new google.maps.LatLng ( textlat.value, textlong.value );
+				map.setCenter(initialLocation); // It seems this function is parallel to the rest of the execution, so this update is necessary
+       		});
+    	}
+    	    	
+        // Get current state of lat/long
 		var flat = textlat.value;
-		
-		var textlong = document.getElementById('textlong');
 		var flong = textlong.value;
+		var initialLocation = new google.maps.LatLng ( textlat.value, textlong.value );
+		
+		// Center the map
+		map.setCenter(initialLocation);
            	
-        var mapOptions = {
-            center: new google.maps.LatLng(flat, flong),
-            zoom: 14
-       };
+        //var mapOptions = {
+        //   center: new google.maps.LatLng(flat, flong),
+        //   zoom: 14
+        //};
        
-       map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
+        // map = new google.maps.Map(document.getElementById("map-canvas"),
+        //     mapOptions);
       	
       	/* Note: moved 'Here' marker to main.js
         var here = {
@@ -199,8 +221,10 @@
 			<option value="pm">PM</option>
 		</select>
 	<p>
-		Latitude: <input type="text" name="textlat" id="textlat" value="49.26"/>
-		Longitude: <input type="text" name="textlong" id="textlong" value="-123.11"/>
+
+		Latitude: <input type="text" name="textlat" id="textlat" />
+		Longitude: <input type="text" name="textlong" id="textlong" />
+		
 	</p>
 		<button type="submit" onclick="getAjaxRequest();">Show Available
 			Spots</button>
