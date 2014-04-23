@@ -42,19 +42,33 @@
 <title>Make Booking</title>
 <script type="text/javascript">
     function initialize() {
+   
+        
+        // Get initial state of lat/long
+        var textlat = document.getElementById('textlat');
+		var flat = textlat.value;
+		
+		var textlong = document.getElementById('textlong');
+		var flong = textlong.value;
+           	
         var mapOptions = {
-          center: new google.maps.LatLng(49.26123, -123.11393),
-          zoom: 15
-        };
-        map = new google.maps.Map(document.getElementById("map-canvas"),
+            center: new google.maps.LatLng(flat, flong),
+            zoom: 14
+       };
+       
+       map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
+      	
+      	/* Note: moved 'Here' marker to main.js
         var here = {
             map: map,
-            position: new google.maps.LatLng(49.26123, -123.11393),
+            position: new google.maps.LatLng(flat, flong),
             content: 'Here'
         }
         var infowindow = new google.maps.InfoWindow(here);
         map.setCenter(here.position);
+        */
+        
         
         google.maps.event.addListener(map, 'click', function(event) {
             placeMarker(event.latLng);
@@ -184,6 +198,10 @@
 			<option value="am">AM</option>
 			<option value="pm">PM</option>
 		</select>
+	<p>
+		Latitude: <input type="text" name="textlat" id="textlat" value="49.26"/>
+		Longitude: <input type="text" name="textlong" id="textlong" value="-123.11"/>
+	</p>
 		<button type="submit" onclick="getAjaxRequest();">Show Available
 			Spots</button>
 	<P>

@@ -3,8 +3,11 @@ var xmlHttpReq = null;
 var selectedMarkerID;
 var guestbookNameString = "";
 var cityCircle;
+var imhere;
 var badIds;
 var index;
+
+var openMarkers =  new Array();
 
 var hourLookup = {};
 hourLookup["12AM"] = "0";
@@ -103,6 +106,11 @@ function httpCallBackFunction_loadMarkers() {
 			badIds = badIds.replace(/(\r\n|\n|\r)/gm,"");
 			badIds = badIds.split(";");
 			
+			while ( openMarkers.length > 0 ){ // Clear all current markers before adding new ones
+				var workingMarker = openMarkers.pop();
+				workingMarker.setMap(null);
+			} 
+			
 			for(mE = 0; mE < markerElements.length; mE++) {
 				var markerElement = markerElements[mE];
 				
@@ -113,7 +121,23 @@ function httpCallBackFunction_loadMarkers() {
 				var srl = markerElement.getAttribute("srl");
 							
 				var myLatlng = new google.maps.LatLng(lat, lng);
-								
+				
+				// Get the center of the circle 	
+				var textlat = document.getElementById('textlat');
+				var textlong = document.getElementById('textlong');
+				var centerlat = parseFloat (textlat.value);
+				var centerlong = parseFloat (textlong.value);
+				
+				// Calculate whether or not a marker is in the radius
+				var dy = lat - centerlat;
+				var dx = lng - centerlong;
+				
+				var hyp = Math.sqrt( dx*dx + dy*dy );
+				
+				if (hyp > 0.01 ){ // Hardcoded radius of 1000 ( 0.01 on lat/long)
+					continue; // don't display marker, move to next
+				}
+				
 				var mrkID = ""+srl;
 				
 				var contentString  = 'Spot #' + mrkID + '<div id="content"><div class="box">' +
@@ -130,6 +154,7 @@ function httpCallBackFunction_loadMarkers() {
 					});
 				
 					addInfowindow(marker, contentString);
+					openMarkers.push( marker ); // Push displayed marker to the current marker array
 				}
 			}
 			console.log(badIds);
@@ -148,7 +173,7 @@ function addInfowindow(marker, content) {
 		selectedMarkerID = marker.getTitle();
 		infowindow.setContent(""+content);
 		infowindow.setPosition(marker.getPosition());
-		infowindow.open(marker.get('map'), marker);		 
+		infowindow.open(marker.get('map'), marker);		
 		//getAjaxRequest(); 
 	});
 }
@@ -356,8 +381,30 @@ function httpCallBackFunction_cancelBooking() {
 function displaySpots()
 {
 	var locations = {};
+	
+	// Get lat/long to begin
+	var textlat = document.getElementById('textlat');
+	var floatlat = parseFloat (textlat.value);
+	
+	var textlong = document.getElementById('textlong');
+	var floatlong = parseFloat (textlong.value);
+	
+	// Make the 'Here' marker around lat/long
+	var here = {
+		map: map,
+		position: new google.maps.LatLng(floatlat, floatlong),
+		content: 'You are here'
+    }
+	// Clear the old marker
+	if (typeof imhere !== 'undefined') {
+		imhere.setMap(null);
+	}
+    imhere = new google.maps.InfoWindow(here);
+    map.setCenter(here.position);
+	
 	locations['location1'] = {
-		center: new google.maps.LatLng(49.26123, -123.11393)
+		//center: new google.maps.LatLng(49.26123, -123.11393)
+		center: new google.maps.LatLng(floatlat, floatlong) // Center around the inputed lat/long
 	};
 	 // Construct the circle for each value in locations.
 
