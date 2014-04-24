@@ -157,7 +157,6 @@ function httpCallBackFunction_loadMarkers() {
 					openMarkers.push( marker ); // Push displayed marker to the current marker array
 				}
 			}
-			console.log(badIds);
 		}else{
 			alert("No data.");
 		}	
@@ -212,9 +211,9 @@ function getAjaxRequest() {
 		var day = parseInt(date[1]);
 		var year = date[2];
 		
-		var starttime = +new Date(year, month, day, startHour, startMinute);
-		var endtime = +new Date(year, month, day, endHour, endMinute);
-		var now = +new Date();
+		var starttime = +new Date(year, month, day, startHour, startMinute)-25200000;
+		var endtime = +new Date(year, month, day, endHour, endMinute)-25200000;
+		var now = +new Date()-25200000;
 		
 		if (endtime <= starttime) {
 			alert('End time has to be later than Start time.');

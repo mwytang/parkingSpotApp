@@ -46,14 +46,14 @@ public class QueryProcessor extends HttpServlet {
         Filter endFilter1 = new FilterPredicate("end", FilterOperator.GREATER_THAN_OR_EQUAL, start);
         Filter endFilter2 = new FilterPredicate("end", FilterOperator.LESS_THAN_OR_EQUAL, end);
         
-        Filter bwFilter1 = new FilterPredicate("start", FilterOperator.LESS_THAN_OR_EQUAL, start);
-        Filter bwFilter2 = new FilterPredicate("end", FilterOperator.GREATER_THAN_OR_EQUAL, end);
+        /*Filter bwFilter1 = new FilterPredicate("start", FilterOperator.LESS_THAN_OR_EQUAL, start);
+        Filter bwFilter2 = new FilterPredicate("end", FilterOperator.GREATER_THAN_OR_EQUAL, end);*/
         
         Filter startFilter = CompositeFilterOperator.and(startFilter1, startFilter2);
         Filter endFilter = CompositeFilterOperator.and(endFilter1, endFilter2);
-        Filter bwFilter = CompositeFilterOperator.and(bwFilter1, bwFilter2);
+        //Filter bwFilter = CompositeFilterOperator.and(bwFilter1, bwFilter2);
         
-        Filter filter = CompositeFilterOperator.or(startFilter, endFilter, bwFilter);
+        Filter filter = CompositeFilterOperator.or(startFilter, endFilter);
         
         Query query = new Query("ParkingSpotApp", bookingKey).setFilter(filter);
         //query.addSort("date", Query.SortDirection.DESCENDING);
